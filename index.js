@@ -13,9 +13,9 @@ import authorRouter from './routes/author.routes';
 import { dbConnection } from './database/index';
 
 // CONFIG
-
 const app = express();
 dotenv.config();
+const port = process.env.PORT || 3000;
 
 // MIDDLEWARES
 app.use(morgan('dev'));
@@ -42,10 +42,10 @@ app.use((err, req, res, next) => {
     });
 });
 
-app.listen(3002, () => {
+app.listen(port, () => {
     try {
         dbConnection();
-        console.log('server on port 3001');
+        console.log(`Server running on port ${port}`);
     } catch (error) {
         console.err(err);
     }

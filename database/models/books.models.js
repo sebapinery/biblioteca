@@ -5,6 +5,7 @@ const bookSchema = new Schema({
   author: { type: String },
   dateReleased: { type: Date },
   isbn: { type: String },
+  deletedAt: { type: Date, required: false, default: null}
 });
 
 const Book = model("Book", bookSchema);
