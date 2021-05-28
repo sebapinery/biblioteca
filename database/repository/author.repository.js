@@ -1,17 +1,26 @@
 import Author from '../models/author.models';
 
-export const getAllAuthors = () => Author.find({"deletedAt" : { $type : "null" } } );
+export const getAllAuthors = () => {
+  return Author.find(
+    {
+      deletedAt: {
+        $type: 'null',
+      },
+    },
+    'name country'
+  );
+};
 
-export const getOneAuthor = (id) => Author.findById(id);
+export const getOneAuthor = (id) => Author.findById(id, 'name country');
 
 export const editOneAuthor = async (id, body) => {
-    return Author.updateOne({ _id: id }, body);
+  return Author.updateOne({ _id: id }, body);
 };
 
 export const createAuthor = (author) => {
-    return Author.create(author);
+  return Author.create(author);
 };
 
 export const deleteAuthor = (id) => {
-    return Author.updateOne({ _id: id }, { deletedAt: new Date() });
+  return Author.updateOne({ _id: id }, { deletedAt: new Date() });
 };
