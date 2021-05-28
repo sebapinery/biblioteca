@@ -8,9 +8,11 @@ export const getAllAuthors = () => {
       },
     },
     'name country',
-    { sort: {
-      name: 'asc'
-    }}
+    {
+      sort: {
+        name: 'asc',
+      },
+    }
   );
 };
 
