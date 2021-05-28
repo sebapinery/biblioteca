@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import {
-    createAuthorController,
-    editOneAuthorController,
-    getAllAuthorsController,
-    getOneAuthorByIdController,
-    deleteAuthorController
+  createAuthorController,
+  editOneAuthorController,
+  getAllAuthorsController,
+  getOneAuthorByIdController,
+  deleteAuthorController,
 } from '../controllers/author.controller';
 
 const router = Router();

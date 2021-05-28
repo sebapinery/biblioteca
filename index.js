@@ -29,24 +29,24 @@ app.use('/authors', authorRouter);
 
 // ERROR HANDLER
 app.use(async (req, res, next) => {
-    next(createError.NotFound('Path not found'));
+  next(createError.NotFound('Path not found'));
 });
 
 app.use((err, req, res, next) => {
-    res.status(err.status || 500);
-    res.send({
-        error: {
-            status: err.status || 500,
-            message: err.message,
-        },
-    });
+  res.status(err.status || 500);
+  res.send({
+    error: {
+      status: err.status || 500,
+      message: err.message,
+    },
+  });
 });
 
 app.listen(port, () => {
-    try {
-        dbConnection();
-        console.log(`Server running on port ${port}`);
-    } catch (error) {
-        console.err(err);
-    }
+  try {
+    dbConnection();
+    console.log(`Server running on port ${port}`);
+  } catch (error) {
+    console.err(err);
+  }
 });

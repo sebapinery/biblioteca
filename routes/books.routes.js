@@ -1,9 +1,9 @@
 import { Router } from 'express';
 
 import {
-    getAllBooksController,
-    createNewBooksController,
-    getSingleBookController,
+  getAllBooksController,
+  createNewBooksController,
+  getSingleBookController,
 } from '../controllers/books.controller';
 
 import { verifyToken } from '../middlewares/user.middleware';

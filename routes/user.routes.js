@@ -1,9 +1,9 @@
 import { Router } from 'express';
 
 import {
-    getAllUsersController,
-    createNewUserController,
-    loginUserController,
+  getAllUsersController,
+  createNewUserController,
+  loginUserController,
 } from '../controllers/user.controller';
 
 import { encryptPasswords, userExists } from '../middlewares/user.middleware';
