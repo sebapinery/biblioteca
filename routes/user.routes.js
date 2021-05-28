@@ -6,7 +6,7 @@ import {
     loginUserController,
 } from '../controllers/user.controller';
 
-import { encryptPasswords, userExists } from '../middlewares/userMiddlewares';
+import { encryptPasswords, userExists } from '../middlewares/user.middleware';
 
 const router = Router();
 

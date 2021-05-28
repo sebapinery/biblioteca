@@ -1,10 +1,18 @@
-import express, { json } from 'express';
+// IMPORT DEPENDENCIES
+import express from 'express';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
-import { dbConnection } from './database/index';
+import createError from 'http-errors';
+
+// IMPORT ROUTES
 import booksRouter from './routes/books.routes';
 import userRouter from './routes/user.routes';
-import createError from 'http-errors';
+import authorRouter from './routes/author.routes';
+
+// IMPORT DB CONNECTION
+import { dbConnection } from './database/index';
+
+// CONFIG
 
 const app = express();
 dotenv.config();
@@ -15,9 +23,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // ROUTES
-
 app.use('/books', booksRouter);
 app.use('/users', userRouter);
+app.use('/authors', authorRouter);
 
 // ERROR HANDLER
 app.use(async (req, res, next) => {

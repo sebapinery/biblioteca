@@ -6,11 +6,11 @@ import {
     getSingleBookController,
 } from '../controllers/books.controller';
 
-import { verifyToken } from '../middlewares/userMiddlewares';
+import { verifyToken } from '../middlewares/user.middleware';
 
 const router = Router();
 
-router.get('/', verifyToken, getAllBooksController);
+router.get('/', getAllBooksController);
 router.get('/:id', getSingleBookController);
 router.post('/', createNewBooksController);
 
