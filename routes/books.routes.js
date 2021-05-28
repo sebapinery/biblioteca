@@ -1,17 +1,17 @@
-import { Router } from "express";
+import { Router } from 'express';
 
 import {
-  getAllBooksController,
-  createNewBooksController,
-  getSingleBookController,
-} from "../controllers/books.controller";
+    getAllBooksController,
+    createNewBooksController,
+    getSingleBookController,
+} from '../controllers/books.controller';
 
-import { verifyToken } from "../middlewares/userMiddlewares";
+import { verifyToken } from '../middlewares/userMiddlewares';
 
 const router = Router();
 
-router.get("/", verifyToken, getAllBooksController);
-router.get("/:id", getSingleBookController);
-router.post("/", createNewBooksController);
+router.get('/', verifyToken, getAllBooksController);
+router.get('/:id', getSingleBookController);
+router.post('/', createNewBooksController);
 
 export default router;
