@@ -7,7 +7,10 @@ export const getAllAuthors = () => {
         $type: 'null',
       },
     },
-    'name country'
+    'name country',
+    { sort: {
+      name: 'asc'
+    }}
   );
 };
 
