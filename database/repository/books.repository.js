@@ -1,4 +1,4 @@
-import Books from "../models/books.models";
+import Books from '../models/books.models';
 
 export const getAllBooks = () => Books.find();
 
