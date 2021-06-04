@@ -1,10 +1,20 @@
+// import {
+//   getAllAuthors,
+//   createAuthor,
+//   getOneAuthor,
+//   editOneAuthor,
+//   deleteAuthor,
+// } from '../databaseMongo/repository/author.repository';
+
 import {
   getAllAuthors,
-  createAuthor,
-  getOneAuthor,
+  createNewAuthor,
+  getOneAuthorById,
+  getOneAuthorByName,
   editOneAuthor,
-  deleteAuthor,
-} from '../database/repository/author.repository';
+  softDeletedAuthor,
+  restoreSoftDeletedAuthor
+} from '../dbSql/repository/author.repository';
 
 export const getAllAuthorsController = async (req, res) => {
   const allAuthors = await getAllAuthors();
@@ -12,21 +22,42 @@ export const getAllAuthorsController = async (req, res) => {
 };
 
 export const getOneAuthorByIdController = async (req, res) => {
-  const authorFound = await getOneAuthor(req.params.id);
+  const authorFound = await getOneAuthorById(req.params.id);
   res.json(authorFound);
 };
 
+export const searchAuthorController = async (req, res) => {
+  const { name } = req.query;
+  try {
+    const authorFound = await getOneAuthorByName(name);
+    res.json(authorFound);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
 export const editOneAuthorController = async (req, res) => {
-  const editedAuthor = await editOneAuthor(req.params.id, req.body);
-  res.json(editedAuthor);
+  try {
+    const editedAuthor = await editOneAuthor(req.params.id, req.body);
+    res.json(editedAuthor);
+  } catch (error) {
+    res.json({ error: error.message });
+  }
 };
 
 export const createAuthorController = async (req, res) => {
-  const newAuthor = await createAuthor(req.body);
+  const newAuthor = await createNewAuthor(req.body);
   res.json(newAuthor);
 };
 
 export const deleteAuthorController = async (req, res) => {
-  const softDeletedAuthor = await deleteAuthor(req.params.id);
-  res.json(softDeletedAuthor);
+  try {
+    const { id } = req.params;
+
+    const deletedAuthor = await softDeletedAuthor(id);
+    res.json(deletedAuthor);
+    
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
 };

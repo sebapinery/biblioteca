@@ -10,12 +10,12 @@ import userRouter from './routes/user.routes';
 import authorRouter from './routes/author.routes';
 
 // IMPORT DB CONNECTION
-import { dbConnection } from './database/index';
+// import { dbConnection } from './database/index';
 
 // CONFIG
 const app = express();
 dotenv.config();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 // MIDDLEWARES
 app.use(morgan('dev'));
@@ -44,9 +44,8 @@ app.use((err, req, res, next) => {
 
 app.listen(port, () => {
   try {
-    dbConnection();
     console.log(`Server running on port ${port}`);
   } catch (error) {
-    console.err(err);
+    console.log(error);
   }
 });

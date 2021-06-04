@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jwt-simple';
 import moment from 'moment';
-import { findUser } from '../database/repository/users.repository';
+import { findUser } from '../databaseMongo/repository/users.repository';
 
 import dotenv from 'dotenv';
 

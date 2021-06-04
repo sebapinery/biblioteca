@@ -1,12 +1,14 @@
+// import {
+//   createUser,
+//   getAllUsers,
+// } from '../databaseMongo/repository/users.repository';
+
 import { createToken } from '../services/security.service';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-import {
-  createUser,
-  getAllUsers,
-} from '../database/repository/users.repository';
+import { createUser, getAllUsers } from '../dbSql/repository/user.repository';
 
 export const getAllUsersController = async (req, res) => {
   const payload = await getAllUsers();
