@@ -5,7 +5,10 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class author extends Model {
     /**
-     * Helper method for defining associations.
+     * Helper method for defining associations. = {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable('books', {
+      id: {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
@@ -38,6 +41,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'author',
+    timestamps: false
   });
   return author;
 };

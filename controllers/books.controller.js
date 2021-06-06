@@ -4,7 +4,7 @@ import {
   createBook,
 } from '../dbSql/repository/book.repository';
 
-export const getAllBooksController = async (req, res) => {
+export const getAllBooksController = async (_, res) => {
   try {
     const payload = await getAllBooks();
     res.json(payload);

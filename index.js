@@ -8,6 +8,7 @@ import createError from 'http-errors';
 import booksRouter from './routes/books.routes';
 import userRouter from './routes/user.routes';
 import authorRouter from './routes/author.routes';
+import tagsRouter from './routes/tags.routes';
 
 // IMPORT DB CONNECTION
 // import { dbConnection } from './database/index';
@@ -26,6 +27,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/books', booksRouter);
 app.use('/users', userRouter);
 app.use('/authors', authorRouter);
+app.use('/tags', tagsRouter);
 
 // ERROR HANDLER
 app.use(async (req, res, next) => {
@@ -42,10 +44,12 @@ app.use((err, req, res, next) => {
   });
 });
 
+
+// SERVER START
 app.listen(port, () => {
   try {
-    console.log(`Server running on port ${port}`);
+    console.log(`Server running on port ${port} 🚀`);
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
 });

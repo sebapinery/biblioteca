@@ -12,13 +12,16 @@ import {
   getOneAuthorById,
   getOneAuthorByName,
   editOneAuthor,
-  softDeletedAuthor,
-  restoreSoftDeletedAuthor
+  softDeletedAuthor
 } from '../dbSql/repository/author.repository';
 
-export const getAllAuthorsController = async (req, res) => {
-  const allAuthors = await getAllAuthors();
+export const getAllAuthorsController = async (_, res) => {
+  try {
+    const allAuthors = await getAllAuthors();
   res.json(allAuthors);
+  } catch (error) {
+    res.status(500).json({ error: error.message})
+  }
 };
 
 export const getOneAuthorByIdController = async (req, res) => {
@@ -32,7 +35,7 @@ export const searchAuthorController = async (req, res) => {
     const authorFound = await getOneAuthorByName(name);
     res.json(authorFound);
   } catch (error) {
-    res.status(500).json(error);
+    res.status(500).json(error.message);
   }
 };
 
@@ -46,8 +49,12 @@ export const editOneAuthorController = async (req, res) => {
 };
 
 export const createAuthorController = async (req, res) => {
-  const newAuthor = await createNewAuthor(req.body);
+  try {
+    const newAuthor = await createNewAuthor(req.body);
   res.json(newAuthor);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
 
 export const deleteAuthorController = async (req, res) => {
