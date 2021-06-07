@@ -10,10 +10,16 @@ export const addBooktoATag = (payload) => {
 
 export const getAllTags = () => {
   return tag.findAll({
-      include: {
-          model: book,
-          as: 'books',
-          attributes: ['name']
-      }
+    attributes: {
+      exclude: ['createdAt', 'updatedAt'],
+    },
+    include: {
+      model: book,
+      as: 'books',
+      attributes: ['name'],
+      through: {
+        attributes: [],
+      },
+    },
   });
 };

@@ -1,4 +1,4 @@
-import { book, author, category, tag, books_tags } from '../models';
+import { book, author, category, tag } from '../models';
 
 export const getAllBooks = () => {
   return book.findAll({
@@ -16,6 +16,7 @@ export const getAllBooks = () => {
       },
       {
         model: category,
+        attributes: ['name']  
       },
       {
         model: tag,
@@ -52,9 +53,12 @@ export const createBook = (newBookBody) => {
   return book.create(newBookBody, {
     include: [
       {
-        model: 'tag',
-        as: 'tags',
-        through: books_tags,
+        model: author,
+        as: 'author'
+      },
+      {
+        model: category,
+        as: 'category'
       },
     ],
   });
