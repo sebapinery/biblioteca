@@ -15,6 +15,9 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
         author.hasMany(models.book);
+        author.belongsToMany(models.tag,{
+          through: 'books_tags'
+        });
     }
   };
   author.init({

@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       quotes.belongsTo(models.book)
+      quotes.belongsToMany(models.tag,{
+        through: 'books_tags'
+      });
     }
   };
   quotes.init({
