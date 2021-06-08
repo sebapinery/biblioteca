@@ -1,4 +1,4 @@
-import { book, tag, books_tags } from '../models';
+import { book, tag, author, quotes, books_tags } from '../models';
 
 export const createNewTag = (tagName) => {
   return tag.create({ tagName });
@@ -13,13 +13,27 @@ export const getAllTags = () => {
     attributes: {
       exclude: ['createdAt', 'updatedAt'],
     },
-    include: {
+    include: [{
+      model: author,
+      as: 'authors',
+      attributes: ['name'],
+      through: {
+        attributes: [],
+      },
+    },{
       model: book,
       as: 'books',
       attributes: ['name'],
       through: {
         attributes: [],
-      },
-    },
+      }
+    },{
+      model: quotes,
+      as: 'quotes',
+      attributes: ['text'],
+      through: {
+        attributes: [],
+      }
+    }],
   });
 };

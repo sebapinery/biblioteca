@@ -8,7 +8,7 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-     await queryInterface.addColumn('books_tags', 'quotesId', {
+     await queryInterface.addColumn('books_tags', 'quoteId', {
       type: Sequelize.INTEGER,
       references: {
         model: 'quotes',
@@ -18,6 +18,7 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
+    await queryInterface.removeColumn('books_tags', 'quoteId');
     /**
      * Add reverting commands here.
      *

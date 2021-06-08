@@ -14,6 +14,12 @@ module.exports = (sequelize, DataTypes) => {
       tag.belongsToMany(models.book, {
         through: 'books_tags'
       })
+      tag.belongsToMany(models.author, {
+        through: 'books_tags'
+      });
+      tag.belongsToMany(models.quotes, {
+        through: 'books_tags'
+      })
     }
   };
   tag.init({

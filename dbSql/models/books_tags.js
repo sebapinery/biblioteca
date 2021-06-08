@@ -19,20 +19,19 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'tagId',
         as: 'tags'
       })
-      books_tags.belongsTo(models.tag,{
+      books_tags.belongsTo(models.author,{
         foreignKey: 'authorId',
         as: 'authors'
       });
-      books_tags.belongsTo(models.tag,{
-        foreignKey: 'quoteId',
-        as: 'quotes'
+      books_tags.belongsTo(models.quotes,{
+        foreignKey: 'quoteId'
       })
     }
   };
   books_tags.init({
     bookId: DataTypes.INTEGER,
     tagId: DataTypes.INTEGER,
-    auhtorId: DataTypes.INTEGER,
+    authorId: DataTypes.INTEGER,
     quoteId: DataTypes.INTEGER
   }, {
     sequelize,
