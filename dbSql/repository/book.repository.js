@@ -3,11 +3,7 @@ import { book, author, category, tag } from '../models';
 export const getAllBooks = () => {
   return book.findAll({
     attributes: {
-      exclude: [
-        'createdAt',
-        'updatedAt',
-        'deletedAt'
-      ],
+      exclude: ['createdAt', 'updatedAt', 'deletedAt'],
     },
     include: [
       {
@@ -16,18 +12,18 @@ export const getAllBooks = () => {
       },
       {
         model: category,
-        attributes: ['name']  
+        attributes: ['name'],
       },
       {
         model: tag,
         as: 'tags',
         attributes: {
-          exclude: ['id','createdAt', 'updatedAt'],
+          exclude: ['id', 'createdAt', 'updatedAt'],
         },
         through: {
           attributes: [],
-        }
-      }
+        },
+      },
     ],
   });
 };
@@ -45,21 +41,47 @@ export const getSingleBookById = (bookId) => {
         model: author,
         attributes: ['name'],
       },
+      {
+        model: category,
+        attributes: ['name'],
+      },
+      {
+        model: tag,
+        as: 'tags',
+        attributes: {
+          exclude: ['id', 'createdAt', 'updatedAt'],
+        },
+        through: {
+          attributes: [],
+        },
+      },
     ],
   });
 };
 
-export const createBook = (newBookBody) => {
-  return book.create(newBookBody, {
+export const createBook = async (newBookBody) => {
+  const newBookCreated = await book.create(newBookBody, {
     include: [
       {
         model: author,
-        as: 'author'
+        as: 'author',
       },
       {
         model: category,
-        as: 'category'
+        as: 'category',
       },
     ],
   });
+
+  const { tags } = newBookBody;
+  if (!tags) return getSingleBookById(newBookCreated.id);
+
+  if (Array.isArray(tags)) {
+    tags.forEach(async (t) => {
+      let tagFound = await tag.findByPk(t);
+      await newBookCreated.addTags(tagFound);
+    });
+  }
+
+  return getSingleBookById(newBookCreated.id);
 };

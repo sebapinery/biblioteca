@@ -1,7 +1,16 @@
-import { category } from '../models';
+import { category, book, author } from '../models';
 
 export const getAllCategories = () => {
-    return category.findAll();
+    return category.findAll({ 
+        include: [{
+            model: book,
+            attributes:['name'],
+            include: [{ 
+                model: author, 
+                attributes: ['name']
+            }]
+        }]
+    });
 }
 
 export const createCategory = (newCategoryBody) => {
