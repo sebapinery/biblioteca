@@ -1,30 +1,13 @@
 import { book, author, category, tag } from '../models';
 
+import { authorsInclude, categoryInclude, tagInclude } from './includeModels';
+
+import { timestampsOff } from '../repository/excludeTemplates';
+
 export const getAllBooks = () => {
   return book.findAll({
-    attributes: {
-      exclude: ['createdAt', 'updatedAt', 'deletedAt'],
-    },
-    include: [
-      {
-        model: author,
-        attributes: ['name'],
-      },
-      {
-        model: category,
-        attributes: ['name'],
-      },
-      {
-        model: tag,
-        as: 'tags',
-        attributes: {
-          exclude: ['id', 'createdAt', 'updatedAt'],
-        },
-        through: {
-          attributes: [],
-        },
-      },
-    ],
+    attributes: timestampsOff,
+    include: [authorsInclude, categoryInclude, tagInclude],
   });
 };
 
@@ -33,29 +16,8 @@ export const getSingleBookById = (bookId) => {
     where: {
       id: bookId,
     },
-    attributes: {
-      exclude: ['createdAt', 'updatedAt', 'deletedAt', 'authorId'],
-    },
-    include: [
-      {
-        model: author,
-        attributes: ['name'],
-      },
-      {
-        model: category,
-        attributes: ['name'],
-      },
-      {
-        model: tag,
-        as: 'tags',
-        attributes: {
-          exclude: ['id', 'createdAt', 'updatedAt'],
-        },
-        through: {
-          attributes: [],
-        },
-      },
-    ],
+    attributes: timestampsOff,
+    include: [authorsInclude, categoryInclude, tagInclude],
   });
 };
 

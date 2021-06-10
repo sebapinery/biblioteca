@@ -1,5 +1,8 @@
-import { author, book } from '../models';
-import Sequelize, { Op } from 'sequelize';
+import { author } from '../models';
+import { Op } from 'sequelize';
+
+import { bookInclude } from "../repository/includeModels";
+import { timestampsOff } from "../repository/excludeTemplates";
 
 export const getAllAuthors = () => {
   return author.findAll({
@@ -8,15 +11,8 @@ export const getAllAuthors = () => {
             [Op.is]: null
           }
       },
-    attributes: {
-      exclude: ['createdAt', 'updatedAt', 'deletedAt'],
-    },
-    include: {
-      model: book,
-      attributes: {
-        exclude: ['createdAt', 'updatedAt', 'authorId', 'deletedAt'],
-      },
-    },
+    attributes: timestampsOff,
+    include: bookInclude,
   });
 };
 
@@ -25,15 +21,8 @@ export const getOneAuthorById = (authorId) => {
     where: {
       id: authorId,
     },
-    attributes: {
-      exclude: ['createdAt', 'updatedAt', 'deletedAt'],
-    },
-    include: {
-      model: book,
-      attributes: {
-        exclude: ['createdAt', 'updatedAt', 'deletedAt'],
-      },
-    },
+    attributes: timestampsOff,
+    include: bookInclude,
   });
 };
 
@@ -44,15 +33,8 @@ export const getOneAuthorByName = (authorName) => {
         [Op.like]: '%' + authorName + '%',
       }
     },
-    attributes: {
-      exclude: ['createdAt', 'updatedAt'],
-    },
-    include: {
-      model: book,
-      attributes: {
-        exclude: ['createdAt', 'updatedAt', 'authorId', 'deletedAt'],
-      },
-    },
+    attributes: timestampsOff,
+    include: bookInclude,
   });
 };
 
