@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jwt-simple';
 import moment from 'moment';
-import { findUser } from '../databaseMongo/repository/users.repository';
+import { findUserByEmail } from '../dbSql/repository/user.repository';
 
 import dotenv from 'dotenv';
 
@@ -12,12 +12,12 @@ export const encryptPasswords = (req, res, next) => {
     req.body.password = bcrypt.hashSync(req.body.password, 10);
     next();
   } catch (error) {
-    res.json(error);
+    res.status(500).json({ error: error.message });
   }
 };
 
 export const userExists = async (req, res, next) => {
-  const payload = await findUser(req.body.email);
+  const payload = await findUserByEmail(req.body.email);
   if (!payload) {
     res.json('User not found');
   } else {

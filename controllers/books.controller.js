@@ -9,7 +9,7 @@ export const getAllBooksController = async (_, res) => {
     const payload = await getAllBooks();
     res.json(payload);
   } catch (error) {
-    res.status(500).json({ error: error });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -18,7 +18,7 @@ export const getSingleBookController = async (req, res) => {
     const payload = await getSingleBookById(req.params.id);
     res.json(payload);
   } catch (error) {
-    res.json({ error: error });
+    res.json({ error: error.message });
   }
 };
 
@@ -27,6 +27,6 @@ export const createNewBooksController = async (req, res) => {
     const newBook = await createBook(req.body);
     res.json(newBook);
   } catch (error) {
-    res.status(500).json(error);
+    res.json({ error: error.message });
   }
 };

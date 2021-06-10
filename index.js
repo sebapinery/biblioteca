@@ -10,6 +10,7 @@ import userRouter from './routes/user.routes';
 import authorRouter from './routes/author.routes';
 import tagsRouter from './routes/tags.routes';
 import categoriesRouter from './routes/categories.routes';
+import searchRouter from './routes/search.routes';
 
 // IMPORT DB CONNECTION
 // import { dbConnection } from './database/index';
@@ -30,6 +31,7 @@ app.use('/users', userRouter);
 app.use('/authors', authorRouter);
 app.use('/tags', tagsRouter);
 app.use('/categories', categoriesRouter);
+app.use('/search', searchRouter);
 
 // ERROR HANDLER
 app.use(async (req, res, next) => {
@@ -55,3 +57,4 @@ app.listen(port, () => {
     console.log(error.message);
   }
 });
+

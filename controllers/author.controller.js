@@ -1,11 +1,3 @@
-// import {
-//   getAllAuthors,
-//   createAuthor,
-//   getOneAuthor,
-//   editOneAuthor,
-//   deleteAuthor,
-// } from '../databaseMongo/repository/author.repository';
-
 import {
   getAllAuthors,
   createNewAuthor,
@@ -35,7 +27,7 @@ export const searchAuthorController = async (req, res) => {
     const authorFound = await getOneAuthorByName(name);
     res.json(authorFound);
   } catch (error) {
-    res.status(500).json(error.message);
+    res.status(500).json({ error: error.message})
   }
 };
 
@@ -44,7 +36,7 @@ export const editOneAuthorController = async (req, res) => {
     const editedAuthor = await editOneAuthor(req.params.id, req.body);
     res.json(editedAuthor);
   } catch (error) {
-    res.json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -65,6 +57,6 @@ export const deleteAuthorController = async (req, res) => {
     res.json(deletedAuthor);
     
   } catch (error) {
-    res.status(500).json(error.message);
+    res.status(500).json({ error: error.message });
   }
 };
