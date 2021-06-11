@@ -5,12 +5,12 @@ import dotenv from 'dotenv';
 import createError from 'http-errors';
 
 // IMPORT ROUTES
-import booksRouter from './routes/books.routes';
-import userRouter from './routes/user.routes';
-import authorRouter from './routes/author.routes';
-import tagsRouter from './routes/tags.routes';
-import categoriesRouter from './routes/categories.routes';
-import searchRouter from './routes/search.routes';
+import booksRouter from './src/routes/books.routes';
+import userRouter from './src/routes/user.routes';
+import authorRouter from './src/routes/author.routes';
+import tagsRouter from './src/routes/tags.routes';
+import categoriesRouter from './src/routes/categories.routes';
+import searchRouter from './src/routes/search.routes';
 
 // IMPORT DB CONNECTION
 // import { dbConnection } from './database/index';
