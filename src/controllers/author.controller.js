@@ -4,21 +4,25 @@ import {
   getOneAuthorById,
   getOneAuthorByName,
   editOneAuthor,
-  softDeletedAuthor
+  softDeletedAuthor,
 } from '../dbSql/repository/author.repository';
 
 export const getAllAuthorsController = async (_, res) => {
   try {
     const allAuthors = await getAllAuthors();
-  res.json(allAuthors);
+    res.json(allAuthors);
   } catch (error) {
-    res.status(500).json({ error: error.message})
+    res.status(500).json({ error: error.message });
   }
 };
 
 export const getOneAuthorByIdController = async (req, res) => {
-  const authorFound = await getOneAuthorById(req.params.id);
-  res.json(authorFound);
+  try {
+    const authorFound = await getOneAuthorById(req.params.id);
+    res.json(authorFound);
+  } catch (error) {
+    res.json(error);
+  }
 };
 
 export const searchAuthorController = async (req, res) => {
@@ -27,7 +31,7 @@ export const searchAuthorController = async (req, res) => {
     const authorFound = await getOneAuthorByName(name);
     res.json(authorFound);
   } catch (error) {
-    res.status(500).json({ error: error.message})
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -36,14 +40,15 @@ export const editOneAuthorController = async (req, res) => {
     const editedAuthor = await editOneAuthor(req.params.id, req.body);
     res.json(editedAuthor);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.log(error);
+    res.status(500).json(error.message);
   }
 };
 
 export const createAuthorController = async (req, res) => {
   try {
     const newAuthor = await createNewAuthor(req.body);
-  res.json(newAuthor);
+    res.json(newAuthor);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -55,7 +60,6 @@ export const deleteAuthorController = async (req, res) => {
 
     const deletedAuthor = await softDeletedAuthor(id);
     res.json(deletedAuthor);
-    
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
