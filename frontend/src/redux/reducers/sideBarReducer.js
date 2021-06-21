@@ -7,25 +7,26 @@ const initialState = {
     {
       title: 'Home',
       path: '/',
-      icon: 'Home',
       class: 'nav-text',
     },
     {
-      title: 'Libros',
-      path: '/books',
-      icon: 'MenuBook',
+      title: 'Nuevo autor',
+      path: '/newauthor',
+      class: 'nav-text',
+    },
+    {
+      title: 'Autores',
+      path: '/authors',
       class: 'nav-text',
     },
     {
       title: 'Configuracion',
       path: '/settings',
-      icon: 'Settings',
       class: 'nav-text',
     },
     {
       title: 'Salir',
       path: '/exit',
-      icon: 'ExitToApp',
       class: 'nav-text',
     },
   ],
