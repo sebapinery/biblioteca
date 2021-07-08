@@ -14,8 +14,8 @@ router.get('/search', searchAuthorController);
 router.get('/:id', getOneAuthorByIdController);
 router.get('/', getAllAuthorsController);
 
-router.patch('/:id', editOneAuthorController);
 router.post('/', createAuthorController);
+router.patch('/:id', editOneAuthorController);
 router.delete('/:id', deleteAuthorController);
 
 export default router;

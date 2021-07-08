@@ -47,3 +47,30 @@ export const createBook = async (newBookBody) => {
 
   return getSingleBookById(newBookCreated.id);
 };
+
+export const softDeletedBook = async (bookId) => {
+  const bookExist = await book.findByPk(bookId);
+  if (!bookExist) throw new Error('Book does not exist');
+
+  await book.update(
+    { deletedAt: new Date() },
+    {
+      where: {
+        id: bookId,
+      },
+    }
+  );
+  return book.findByPk(bookId);
+};
+
+export const editOneBook = async (bookId, updateBody) => {
+  const bookExist = await book.findByPk(bookId);
+  if (!bookExist) throw new Error('Book does not exist');
+
+  await book.update(updateBody, {
+    where: {
+      id: bookId,
+    },
+  });
+  return book.findByPk(bookId);
+};
