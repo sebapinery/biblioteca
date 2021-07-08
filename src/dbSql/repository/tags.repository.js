@@ -12,7 +12,7 @@ export const createNewTag = (tagName) => {
   return tag.create({ tagName });
 };
 
-export const makeRelationController = (payload) => {
+export const makeRelation = (payload) => {
   // boookId
   // authorId
   // quoteId

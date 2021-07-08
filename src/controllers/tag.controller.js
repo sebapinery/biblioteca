@@ -1,6 +1,6 @@
 import {
   createNewTag,
-  addBooktoATag,
+  makeRelation,
   getAllTags,
 } from '../dbSql/repository/tags.repository';
 
@@ -9,9 +9,9 @@ export const createNewTagController = async (req, res) => {
   res.json(tagCreated);
 };
 
-export const addBooktoATagController = async (req, res) => {
+export const makeRelationController = async (req, res) => {
   try {
-    const payload = await addBooktoATag(req.body);
+    const payload = await makeRelation(req.body);
     res.json(payload);
   } catch (error) {
     res.json(error);

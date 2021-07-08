@@ -48,7 +48,6 @@ app.use((err, req, res, next) => {
   });
 });
 
-
 // SERVER START
 app.listen(port, () => {
   try {
