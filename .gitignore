@@ -7,3 +7,5 @@ package-lock.json
 /.vscode
 sql diagram.mwb
 frontend/yarn.lock
+documentation.postman_collection-Swagger20.json
+package-lock.json
