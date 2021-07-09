@@ -16,7 +16,7 @@ export const createNewTagController = async (req, res) => {
 };
 
 export const getTagByIdController = async (req, res) => {
-  const { tagId } = req.body;
+  const { tagId } = req.params;
   try {
     const tagExist = await getTagById(tagId);
     if(!tagExist) res.status(404).json({ error: `Tag id ${tagId} does not exist`});

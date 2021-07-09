@@ -6,12 +6,12 @@ import {
   loginUserController,
 } from '../controllers/user.controller';
 
-import { encryptPasswords, userExists } from '../middlewares/user.middleware';
+import { encryptPasswords, loginUserByEmail } from '../middlewares/user.middleware';
 
 const router = Router();
 
 router.get('/', getAllUsersController);
 router.post('/register',encryptPasswords, createNewUserController);
-router.post('/login', userExists, loginUserController);
+router.post('/login', loginUserByEmail, loginUserController);
 
 export default router;

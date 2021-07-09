@@ -16,17 +16,16 @@ export const encryptPasswords = (req, res, next) => {
   }
 };
 
-export const userExists = async (req, res, next) => {
-  const payload = await findUserByEmail(req.body.email);
-  if (!payload) {
-    res.json('User not found');
-  } else {
+export const loginUserByEmail = async (req, res, next) => {
+  const userExist = await findUserByEmail(req.body.email);
+  if (!userExist) res.json('User not found'); 
+  else {
     const passwordMatch = await bcrypt.compare(
       req.body.password,
-      payload.password
+      userExist.password
     );
     if (!passwordMatch) {
-      res.json({ error: 'Invalid password' });
+      res.status(401).json({ error: 'Invalid password' });
     } else {
       next();
     }
@@ -34,21 +33,19 @@ export const userExists = async (req, res, next) => {
 };
 
 export const verifyToken = (req, res, next) => {
-  if (!req.headers['user-token']) {
-    return res.json({ error: 'Theres not token' });
-  }
-
   const userToken = req.headers['user-token'];
+  if (!userToken) res.json({ error: 'Theres not token' })
+
   let payload = {};
 
   try {
     payload = jwt.decode(userToken, process.env.JWT_ENCODE);
   } catch (error) {
-    return res.json({ error: 'Not valid token' });
+    return res.status(401).json({ error: 'Not valid token' });
   }
 
   if (payload.expiredAt < moment().unix()) {
-    return res.json({ error: 'Token has expired' });
+    return res.status(401).json({ error: 'Token has expired' });
   }
 
   next();

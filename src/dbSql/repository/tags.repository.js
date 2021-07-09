@@ -17,12 +17,12 @@ export const getTagById = (tagId) => {
     where: {
       id: tagId,
     },
-    attributes: timestampsOff,
-    include: [
-      { ...authorsInclude, as: 'authors', through: attributesOff },
-      { ...bookInclude, through: attributesOff },
-      { ...quotesInclude, through: attributesOff},
-    ],
+    // attributes: timestampsOff,
+    // include: [
+    //   { ...authorsInclude, as: 'authors', through: attributesOff },
+    //   { ...bookInclude, through: attributesOff },
+    //   { ...quotesInclude, through: attributesOff},
+    // ],
   });
 };
 
