@@ -49,9 +49,6 @@ export const createBook = async (newBookBody) => {
 };
 
 export const softDeletedBook = async (bookId) => {
-  const bookExist = await book.findByPk(bookId);
-  if (!bookExist) throw new Error('Book does not exist');
-
   await book.update(
     { deletedAt: new Date() },
     {
@@ -64,9 +61,6 @@ export const softDeletedBook = async (bookId) => {
 };
 
 export const editOneBook = async (bookId, updateBody) => {
-  const bookExist = await book.findByPk(bookId);
-  if (!bookExist) throw new Error('Book does not exist');
-
   await book.update(updateBody, {
     where: {
       id: bookId,

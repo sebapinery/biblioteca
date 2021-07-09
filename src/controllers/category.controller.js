@@ -15,7 +15,7 @@ export const getAllCategoriesController = async (req, res) => {
 export const createCategoryController = async (req, res) => {
   try {
     const newCategoryCreated = await createCategory(req.body);
-    res.json(newCategoryCreated);
+    res.status(201).json(newCategoryCreated);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

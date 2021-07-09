@@ -39,9 +39,6 @@ export const getOneAuthorByName = (authorName) => {
 };
 
 export const editOneAuthor = async (authorId, updateBody) => {
-  const authorExist = await author.findByPk(authorId);
-  if (!authorExist) throw new Error('Author does not exist');
-
   await author.update(updateBody, {
     where: {
       id: authorId,
@@ -50,14 +47,12 @@ export const editOneAuthor = async (authorId, updateBody) => {
   return author.findByPk(authorId);
 };
 
+
 export const createNewAuthor = (newAuthorBody) => {
   return author.create(newAuthorBody);
 };
 
 export const softDeletedAuthor = async (authorId) => {
-  const authorExist = await author.findByPk(authorId);
-  if (!authorExist) throw new Error('Author does not exist');
-
   await author.update(
     { deletedAt: new Date() },
     {

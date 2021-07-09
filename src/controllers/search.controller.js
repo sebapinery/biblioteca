@@ -13,7 +13,7 @@ export const searchController = (req, res) => {
           const searchResult = await search(key,value);
           res.json(searchResult);
         } catch (error) {
-          res.json({ error: error.message });
+          res.status(500).json({ error: error.message });
         }
       }
     })

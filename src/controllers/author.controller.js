@@ -17,15 +17,19 @@ export const getAllAuthorsController = async (_, res) => {
 };
 
 export const getOneAuthorByIdController = async (req, res) => {
+  const { id } = req.params;
   try {
-    const authorFound = await getOneAuthorById(req.params.id);
+    const authorFound = await getOneAuthorById(id);
+    if (!authorFound) res.status(404).json({ error: `Author id: "${id}" does not exist` });
+    if(authorFound.deletedAt) res.status(409).json({ error: `Author was deleted at ${authorFound.deletedAt}` });
+
     res.json(authorFound);
   } catch (error) {
     res.json(error);
   }
 };
 
-export const searchAuthorController = async (req, res) => {
+export const searchAuthorByNameController = async (req, res) => {
   const { name } = req.query;
   try {
     const authorFound = await getOneAuthorByName(name);
@@ -36,12 +40,20 @@ export const searchAuthorController = async (req, res) => {
 };
 
 export const editOneAuthorController = async (req, res) => {
+  const {
+    params: { id },
+    body,
+  } = req;
   try {
-    const editedAuthor = await editOneAuthor(req.params.id, req.body);
-    res.json(editedAuthor);
+    const authorExist = await getOneAuthorById(id);
+    if(!authorExist) {
+      return res.status(404).json({ error: 'Author does not exist'})
+    } else{
+      const editedAuthor = await editOneAuthor(id, body);
+      return res.json(editedAuthor);
+    }
   } catch (error) {
-    console.log(error);
-    res.status(500).json(error.message);
+    res.status(500).json({error: error.message});
   }
 };
 
@@ -55,11 +67,15 @@ export const createAuthorController = async (req, res) => {
 };
 
 export const deleteAuthorController = async (req, res) => {
+  const { id } = req.params;
   try {
-    const { id } = req.params;
-
-    const deletedAuthor = await softDeletedAuthor(id);
-    res.json(deletedAuthor);
+    const authorExist = await getOneAuthorById(id);
+    if(!authorExist) {
+      return res.status(404).json({ error: 'Author does not exist'})
+    }else{
+      const deletedAuthor = await softDeletedAuthor(id);
+      res.json(deletedAuthor);
+    }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
