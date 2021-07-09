@@ -16,6 +16,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { DatePicker } from '@material-ui/pickers';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCountriesAction } from '../../redux/actions/countryActions';
+import axios from 'axios';
+import moment from 'moment';
 
 const useStyles = makeStyles({
   card: {
@@ -53,38 +55,53 @@ export const FormNewAuthor = () => {
   const dispatch = useDispatch();
   const countries = useSelector((state) => state.countries);
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false); // SELECTOR TOGGLE STATE
   const [name, setName] = useState('');
   const [country, setCountry] = useState('');
-  const [dateOfBirth, setDateOfBirth] = useState();
-  const [dateOfDead, setDateOfDead] = useState();
+  const [dateOfBirth, setDateOfBirth] = useState(null);
+  const [dateOfDeath, setDateOfDeath] = useState(null);
 
   const handleDateBirth = (date) => {
     setDateOfBirth(date);
   }
-  const handleDateDead = (date) => {
-    setDateOfDead(date);
+  const handleDateDeath = (date) => {
+    setDateOfDeath(date);
   }
 
-  const handleChange = (event) => {
-    setCountry(event.target.value)
+  const handleCountrySelectorChange = (country) => {
+    setCountry(country)
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleCountrySelectorToggle = () => {
+    setOpen(!open);
   };
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const inputHandler = (value) => {
+  const inputNameHandler = (value) => {
     setName(value);
   };
 
   const createAuthorHandler = (e) =>{
     e.preventDefault();
-    console.log(dateOfBirth)
+
+    axios.post('/authors', {
+        name,
+        country,
+        dateOfBirth,
+        dateOfDeath
+      } )
+      .then(({data, status}) => {
+        // ALERT NOTIFICATION
+        setName('')
+        setCountry(null)
+        setDateOfBirth(null)
+        setDateOfDeath(null)
+        console.log({data, status})
+      })
+      .catch(err => {
+        // ALERT NOTIFICATION
+        console.log(err)
+      })
+      
   }
   useEffect(() => {
     dispatch(getCountriesAction);
@@ -112,7 +129,7 @@ export const FormNewAuthor = () => {
                     id="standard-basic"
                     label="Nombre"
                     value={name}
-                    onChange={(e) => inputHandler(e.target.value)}
+                    onChange={e => inputNameHandler(e.target.value)}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -125,9 +142,9 @@ export const FormNewAuthor = () => {
                     id="demo-controlled-open-select"
                     open={open}
                     value={country}
-                    onClose={handleClose}
-                    onOpen={handleOpen}
-                    onChange={handleChange}
+                    onClose={handleCountrySelectorToggle}
+                    onOpen={handleCountrySelectorToggle}
+                    onChange={e => handleCountrySelectorChange(e.target.value)}
                   >
                     <MenuItem disabled value="">
                       <em></em>
@@ -159,8 +176,8 @@ export const FormNewAuthor = () => {
                     variant="inline"
                     label="Fecha de defunsion"
                     views={["year", "month", "date"]}
-                    value={dateOfDead}
-                    onChange={handleDateDead}
+                    value={dateOfDeath}
+                    onChange={handleDateDeath}
                   />
                 </Grid>
                 <Button className={classes.submitButton} onClick={createAuthorHandler} type="submit" >Enviar</Button>
