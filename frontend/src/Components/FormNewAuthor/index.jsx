@@ -13,11 +13,13 @@ import {
 } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+// import { alpha } from '@material-ui/core/styles'
 import { DatePicker } from '@material-ui/pickers';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCountriesAction } from '../../redux/actions/countryActions';
-import axios from 'axios';
-import moment from 'moment';
+// import axios from 'axios';
+import { createNewAuthor } from '../../redux/actions/authorsActios';
+// import moment from 'moment';
 
 const useStyles = makeStyles({
   card: {
@@ -56,7 +58,7 @@ export const FormNewAuthor = () => {
   const countries = useSelector((state) => state.countries);
 
   const [open, setOpen] = useState(false); // SELECTOR TOGGLE STATE
-  const [name, setName] = useState('');
+  const [authorName, setAuthorName] = useState('');
   const [country, setCountry] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState(null);
   const [dateOfDeath, setDateOfDeath] = useState(null);
@@ -77,31 +79,13 @@ export const FormNewAuthor = () => {
   };
 
   const inputNameHandler = (value) => {
-    setName(value);
+    setAuthorName(value);
   };
 
   const createAuthorHandler = (e) =>{
     e.preventDefault();
+    dispatch(createNewAuthor(authorName, country, dateOfBirth, dateOfDeath));
 
-    axios.post('/authors', {
-        name,
-        country,
-        dateOfBirth,
-        dateOfDeath
-      } )
-      .then(({data, status}) => {
-        // ALERT NOTIFICATION
-        setName('')
-        setCountry(null)
-        setDateOfBirth(null)
-        setDateOfDeath(null)
-        console.log({data, status})
-      })
-      .catch(err => {
-        // ALERT NOTIFICATION
-        console.log(err)
-      })
-      
   }
   useEffect(() => {
     dispatch(getCountriesAction);
@@ -128,7 +112,7 @@ export const FormNewAuthor = () => {
                     className={classes.input}
                     id="standard-basic"
                     label="Nombre"
-                    value={name}
+                    value={authorName}
                     onChange={e => inputNameHandler(e.target.value)}
                   />
                 </Grid>
@@ -162,7 +146,7 @@ export const FormNewAuthor = () => {
                 </Grid>
                 <Grid className={classes.row} item xs={12}>
                   <DatePicker
-                    className={classes.inputDate}
+                    // className={classes.inputDate}
                     format="DD/MM/yyyy"
                     variant="inline"
                     label="Fecha de nacimiento"
@@ -171,7 +155,7 @@ export const FormNewAuthor = () => {
                     onChange={handleDateBirth}
                   />
                   <DatePicker
-                    className={classes.inputDate}
+                    // className={classes.inputDate}
                     format="DD/MM/yyyy"
                     variant="inline"
                     label="Fecha de defunsion"

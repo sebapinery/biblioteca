@@ -24,11 +24,8 @@ export const loginUserByEmail = async (req, res, next) => {
       req.body.password,
       userExist.password
     );
-    if (!passwordMatch) {
-      res.status(401).json({ error: 'Invalid password' });
-    } else {
-      next();
-    }
+    if (!passwordMatch) res.status(401).json({ error: 'Invalid password' });
+    else next();
   }
 };
 
