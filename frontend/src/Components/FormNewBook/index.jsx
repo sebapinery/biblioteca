@@ -18,13 +18,14 @@ import { DatePicker } from '@material-ui/pickers';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCountriesAction } from '../../redux/actions/countryActions';
 // import axios from 'axios';
-import { createNewAuthor } from '../../redux/actions/authorsActions';
-// import { setAlert } from '../../redux/actions/alertActions';
+// import CustomizedSnackbars from '../../utils/alert'
+import {
+  createNewAuthor,
+  getAllAuthors,
+} from '../../redux/actions/authorsActions';
+import { setAlert } from '../../redux/actions/alertActions';
+import CustomizedSnackbars from '../../utils/alert';
 // import moment from 'moment';
-
-// const alphaStyles = alpha({
-//   color: '#593b8b'
-// })
 
 const useStyles = makeStyles({
   card: {
@@ -57,120 +58,95 @@ const useStyles = makeStyles({
   },
 });
 
-export const FormNewAuthor = () => {
+export const FormNewBook = () => {
   const classes = useStyles();
-  // const classesAlpha = alphaStyles()
   const dispatch = useDispatch();
-  const countries = useSelector((state) => state.countries);
+  const authors = useSelector((state) => state.authors);
 
   const [open, setOpen] = useState(false); // SELECTOR TOGGLE STATE
-  const [authorName, setAuthorName] = useState('');
-  const [country, setCountry] = useState('');
-  const [dateOfBirth, setDateOfBirth] = useState(null);
-  const [dateOfDeath, setDateOfDeath] = useState(null);
+  const [bookName, setBookName] = useState('');
+  const [author, setAuthor] = useState('');
+  // const [alarm, setAlarm] = useState();
 
-  const handleDateBirth = (date) => {
-    setDateOfBirth(date);
-  };
-  const handleDateDeath = (date) => {
-    setDateOfDeath(date);
+  const handleAuthorSelectorChange = (author) => {
+    setAuthor(author);
   };
 
-  const handleCountrySelectorChange = (country) => {
-    setCountry(country);
-  };
-
-  const handleCountrySelectorToggle = () => {
+  const handleAuthorSelectorToggle = () => {
     setOpen(!open);
   };
 
   const inputNameHandler = (value) => {
-    setAuthorName(value);
+    setBookName(value);
   };
 
   const createAuthorHandler = (e) => {
     e.preventDefault();
-    dispatch(createNewAuthor(authorName, country, dateOfBirth, dateOfDeath));
+    // DISPATCH CREATE NEW BOOOK
+    console.log(e)
+    // dispatch(setAlert(true, "success", "El libro fue cargado correctamente"))
   };
+
+
+
   useEffect(() => {
-    dispatch(getCountriesAction);
+    dispatch(getAllAuthors());
   }, []);
 
   return (
     <div>
+      {/* <CustomizedSnackbars toggle={true} /> */}
       <Container maxWidth="md" fixed>
         <Card className={classes.card}>
           <CardHeader
             avatar={
               <Avatar aria-label="recipe" className={classes.avatar}>
-                A
+                L
               </Avatar>
             }
-            title="Crear un nuevo autor"
+            title="Crear un nuevo libro"
             subheader="Complete todos los campos"
           ></CardHeader>
           <CardContent>
-            <Grid>
+            <Grid spacing={3}>
               <form className={classes.form} noValidate autoComplete="off">
                 <Grid item xs={12}>
                   <TextField
                     className={classes.input}
                     id="standard-basic"
-                    label="Nombre"
-                    value={authorName}
+                    label="Nombre del libro"
+                    value={bookName}
                     onChange={(e) => inputNameHandler(e.target.value)}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <InputLabel id="demo-controlled-open-select-label">
-                    Pais de nacimiento
+                    Autor
                   </InputLabel>
                   <Select
                     className={classes.input}
                     labelId="demo-controlled-open-select-label"
                     id="demo-controlled-open-select"
                     open={open}
-                    value={country}
-                    onClose={handleCountrySelectorToggle}
-                    onOpen={handleCountrySelectorToggle}
-                    onChange={(e) =>
-                      handleCountrySelectorChange(e.target.value)
-                    }
+                    value={author}
+                    onClose={handleAuthorSelectorToggle}
+                    onOpen={handleAuthorSelectorToggle}
+                    onChange={(e) => handleAuthorSelectorChange(e.target.value)}
                   >
-                    <MenuItem disabled value="">
-                      <em></em>
-                    </MenuItem>
-                    {countries.loading === true ? (
-                      <MenuItem disabled>Cargando paises...</MenuItem>
+                    {authors.loading === true ? (
+                      <MenuItem disabled>Cargando autores...</MenuItem>
                     ) : (
-                      countries.list.map((c) => (
-                        <MenuItem key={c.alpha2Code} value={c.alpha2Code}>
-                          {c.name}
+                      authors.allAuthors.map((author) => (
+                        <MenuItem key={author.id} value={author.id}>
+                          {author.name}
                         </MenuItem>
                       ))
                     )}
                   </Select>
                 </Grid>
-                <Grid className={classes.row} item xs={12}>
-                  <DatePicker
-                    className={classes.inputDate}
-                    format="DD/MM/yyyy"
-                    variant="inline"
-                    label="Fecha de nacimiento"
-                    views={['year', 'month', 'date']}
-                    value={dateOfBirth}
-                    onChange={handleDateBirth}
-                  />
-                  <DatePicker
-                    className={classes.inputDate}
-                    format="DD/MM/yyyy"
-                    variant="inline"
-                    label="Fecha de defunsion"
-                    views={['year', 'month', 'date']}
-                    value={dateOfDeath}
-                    onChange={handleDateDeath}
-                  />
-                </Grid>
+                {/* <Grid className={classes.row} item xs={12}>
+                  
+                </Grid> */}
                 <Button
                   className={classes.submitButton}
                   onClick={createAuthorHandler}

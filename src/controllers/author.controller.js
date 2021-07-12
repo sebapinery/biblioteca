@@ -10,7 +10,7 @@ import {
 export const getAllAuthorsController = async (_, res) => {
   try {
     const allAuthors = await getAllAuthors();
-    res.json(allAuthors);
+    res.status(200).json(allAuthors);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

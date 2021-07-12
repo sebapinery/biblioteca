@@ -3,6 +3,8 @@ import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { setAlert } from '../redux/actions/alertActions';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -17,34 +19,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CustomizedSnackbars(props) {
+export default function AlertCustom(props) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(props ? props.toogle : false);
-
-  const handleClick = () => {
-    setOpen(true);
-  };
+  const dispatch = useDispatch();
+  const alertOpen = useSelector(state => state.alert.alertOpen);
+  const alertType = useSelector(state => state.alert.alertType);
+  const alertMessage = useSelector(state => state.alert.alertMessage);
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
-
-    setOpen(false);
+     dispatch(setAlert(false, alertType, alertMessage))
   };
+
 
   return (
     <div className={classes.root}>
-      {/* <Button variant="outlined" onClick={handleClick}>
-        Open success snackbar
-      </Button> */}
       <Snackbar 
-            open={open} 
-            autoHideDuration={6000} 
+            open={alertOpen} 
+            autoHideDuration={3000} 
             onClose={handleClose}
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
-        <Alert onClose={handleClose} severity="error">
-          This is a success message!
+            // anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            >
+        <Alert 
+              onClose={handleClose} 
+              severity={alertType}>
+          {alertMessage}
         </Alert>
       </Snackbar>
     </div>

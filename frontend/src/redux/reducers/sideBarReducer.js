@@ -15,6 +15,11 @@ const initialState = {
       class: 'nav-text',
     },
     {
+      title: 'Nuevo libro',
+      path: '/newbook',
+      class: 'nav-text',
+    },
+    {
       title: 'Autores',
       path: '/authors',
       class: 'nav-text',
