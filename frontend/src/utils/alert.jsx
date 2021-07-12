@@ -1,5 +1,4 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
@@ -26,6 +25,7 @@ export default function AlertCustom(props) {
   const alertType = useSelector(state => state.alert.alertType);
   const alertMessage = useSelector(state => state.alert.alertMessage);
 
+  // const {alertOpen, alertType, alertMessage } = useSelector(state => state.alert);
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
