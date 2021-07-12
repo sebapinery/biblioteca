@@ -5,7 +5,7 @@ export const searchController = (req, res) => {
 
 
   if(Object.entries(querys).length > 1 || Object.entries(querys).length === 0){
-    res.json({message: 'Solo puede buscar por un query.'})
+    res.status(400).json({message: 'Solo puede buscar por un query.'})
   }else{
     Object.entries(querys).forEach(async ([key, value]) => {
       if (key) {
