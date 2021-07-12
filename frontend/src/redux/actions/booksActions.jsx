@@ -9,14 +9,10 @@ import {
   CREATE_BOOKS_FAIL,
 } from '../contants';
 
-export const createNewBook = () => async (dispatch) => {
+export const createNewBook = newBook => async (dispatch) => {
   dispatch({ type: CREATE_BOOKS_REQUEST });
   try {
-    const { data } = await axios.post('/books', {
-      ///////////////////////////////////
-      /// BODY DE LA REQ DEL NEW BOOK ///
-      ///////////////////////////////////
-    });
+    const { data } = await axios.post('/books', newBook);
     dispatch({ type: CREATE_BOOKS_SUCCESS, payload: data });
     dispatch(setAlert(true, 'success', "El libro se creo con exito"));
   

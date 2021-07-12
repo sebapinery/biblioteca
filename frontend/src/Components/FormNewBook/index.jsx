@@ -25,6 +25,7 @@ import {
 } from '../../redux/actions/authorsActions';
 import { setAlert } from '../../redux/actions/alertActions';
 import CustomizedSnackbars from '../../utils/alert';
+import { createNewBook } from '../../redux/actions/booksActions';
 // import moment from 'moment';
 
 const useStyles = makeStyles({
@@ -65,11 +66,11 @@ export const FormNewBook = () => {
 
   const [open, setOpen] = useState(false); // SELECTOR TOGGLE STATE
   const [bookName, setBookName] = useState('');
-  const [author, setAuthor] = useState('');
+  const [authorId, setAuthorId] = useState('');
   // const [alarm, setAlarm] = useState();
 
   const handleAuthorSelectorChange = (author) => {
-    setAuthor(author);
+    setAuthorId(author);
   };
 
   const handleAuthorSelectorToggle = () => {
@@ -80,14 +81,14 @@ export const FormNewBook = () => {
     setBookName(value);
   };
 
-  const createAuthorHandler = (e) => {
+  const createBookHandler = (e) => {
     e.preventDefault();
-    // DISPATCH CREATE NEW BOOOK
-    console.log(e)
-    // dispatch(setAlert(true, "success", "El libro fue cargado correctamente"))
+   const newBook = {
+     name: bookName,
+     authorId
+   }
+    dispatch(createNewBook(newBook))
   };
-
-
 
   useEffect(() => {
     dispatch(getAllAuthors());
@@ -95,7 +96,6 @@ export const FormNewBook = () => {
 
   return (
     <div>
-      {/* <CustomizedSnackbars toggle={true} /> */}
       <Container maxWidth="md" fixed>
         <Card className={classes.card}>
           <CardHeader
@@ -128,7 +128,7 @@ export const FormNewBook = () => {
                     labelId="demo-controlled-open-select-label"
                     id="demo-controlled-open-select"
                     open={open}
-                    value={author}
+                    value={authorId}
                     onClose={handleAuthorSelectorToggle}
                     onOpen={handleAuthorSelectorToggle}
                     onChange={(e) => handleAuthorSelectorChange(e.target.value)}
@@ -149,7 +149,7 @@ export const FormNewBook = () => {
                 </Grid> */}
                 <Button
                   className={classes.submitButton}
-                  onClick={createAuthorHandler}
+                  onClick={createBookHandler}
                   type="submit"
                 >
                   Enviar
