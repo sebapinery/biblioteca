@@ -21,7 +21,11 @@ export const createNewCategory = () => async (dispatch) => {
     dispatch({ type: CREATE_CATEGORY_SUCCESS, payload: data });
     dispatch(setAlert(true, 'success', "La categoria se creo con exito!"));
   } catch (error) {
-    dispatch({ type: CREATE_CATEGORY_FAIL, error: error.message });
+    dispatch({ 
+      type: CREATE_CATEGORY_FAIL, 
+      error: error.response && error.response.data.message
+      ? error.response.data.message
+      : error.message,  });
     dispatch(setAlert(true, 'error', error.message));
   }
 };
@@ -32,7 +36,12 @@ export const getAllCategories = () => async (dispatch) => {
     const { data } = await axios.get('/categories');
     dispatch({ type: GET_CATEGORIES_SUCCESS, payload: data });
   } catch (error) {
-    dispatch({ type: GET_CATEGORIES_ERROR, error: error.message });
+    dispatch({ 
+      type: GET_CATEGORIES_ERROR, 
+      error: error.response && error.response.data.message
+      ? error.response.data.message
+      : error.message,  
+    });
     dispatch(setAlert(true, 'error', error.message));
   }
 };

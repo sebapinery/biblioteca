@@ -5,6 +5,7 @@ import { authorsReducer } from './reducers/authorsReducer';
 import { alertReducer } from './reducers/alertReducer';
 import { booksReducer } from './reducers/booksReducer';
 import { categoriesReducer } from './reducers/categoriesReducer';
+import { tagsReducer } from './reducers/tagsReducer';
 
 export default configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export default configureStore({
     countries: contriesReducer,
     authors: authorsReducer,
     books: booksReducer,
-    categories: categoriesReducer
+    categories: categoriesReducer,
+    tags: tagsReducer
   },
 });

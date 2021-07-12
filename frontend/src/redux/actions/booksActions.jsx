@@ -21,7 +21,12 @@ export const createNewBook = () => async (dispatch) => {
     dispatch(setAlert(true, 'success', "El libro se creo con exito"));
   
   } catch (error) {
-    dispatch({ type: CREATE_BOOKS_FAIL, error: error.message });
+    dispatch({ 
+      type: CREATE_BOOKS_FAIL, 
+      error: error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message, 
+      });
     dispatch(setAlert(true, 'error', error.message));
   }
 };
@@ -32,7 +37,11 @@ export const getAllBooks = () => async (dispatch) => {
     const { data } = await axios.get('/books');
     dispatch({ type: GET_BOOKS_SUCCESS, payload: data });
   } catch (error) {
-    dispatch({ type: GET_BOOKS_FAIL, error: error.message });
+    dispatch({ 
+      type: GET_BOOKS_FAIL, 
+      error: error.response && error.response.data.message
+      ? error.response.data.message
+      : error.message,  });
     dispatch(setAlert(true, 'error', error.message));
   }
 };

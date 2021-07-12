@@ -24,7 +24,7 @@ export const createNewAuthor =
     } catch (error) {
       dispatch({
         type: CREATE_AUTHORS_FAIL,
-        payload:
+        error:
           error.response && error.response.data.message
             ? error.response.data.message
             : error.message,
@@ -41,7 +41,7 @@ export const getAllAuthors = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_AUTHORS_FAIL,
-      payload:
+      error:
         error.response && error.response.data.message
           ? error.response.data.message
           : error.message,
